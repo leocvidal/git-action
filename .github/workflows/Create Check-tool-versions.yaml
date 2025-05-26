@@ -1,3 +1,5 @@
+name: Check Tool Versions
+
 on:
   workflow_dispatch:
     inputs:
@@ -7,9 +9,16 @@ on:
         default: 'dev'
       version:
         description: 'Version number'
-        required: false- name: Check tool versions
-  run: |
-    kubectl version --client || echo "kubectl not found"
-    helm version || echo "helm not found"
-    aws --version || echo "awscli not found"
-    jq --version || echo "jq not found"
+        required: false
+
+jobs:
+  check-tools:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check tool versions
+        run: |
+          kubectl version --client || echo "kubectl not found"
+          helm version || echo "helm not found"
+          aws --version || echo "awscli not found"
+          jq --version || echo "jq not found"
